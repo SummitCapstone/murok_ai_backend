@@ -1,0 +1,6 @@
+numpy==1.26.2
+Pillow==10.1.0
+timm==0.9.10
+torch==2.1.1
+torchvision=0.13.1
+tqdm==4.66.1
