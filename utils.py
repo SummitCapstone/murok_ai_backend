@@ -24,40 +24,53 @@ disease_map = {
  'b8': '다량원소결핍(K)'
 }
 
-label_for_pepper = {
-  0: "0",
-  1: "a7",
-  2: "a8",
-  3: "b1",
-  4: "b2",
-  5: "b3",
-  6: "b6",
-  7: "b7",
-  8: "b8"
-}
+def generate_labels(prefix, num_labels):
+  labels = {0: "0"}
+  for i in range(1, 3):
+      labels[i] = f"{prefix}{num_labels + i}"
+  return labels
+
+# Common labels for all vegetables
+common_labels = {3: "b1", 4: "b2", 5: "b3", 6: "b6", 7: "b7", 8: "b8"}
 
 def get_disease_map():
     return disease_map
 
+def get_common_labels():
+    return common_labels
+
 def get_label_map(crop_type):
-    # crop_type에 따라 모델 선택
+    common_labels = get_common_labels()
+
+    # crop_type에 따라 모델이 학습한 label 선택
     if crop_type == 'strawberry':
-        return
+        label_for_strawberry = generate_labels("a", 0)  # Assuming 2 additional labels for strawberry
+        label_for_strawberry.update(common_labels)
+        return label_for_strawberry
+
     elif crop_type == 'cucumber':
-        return
+        label_for_cucumber = generate_labels("a", 2)  # Assuming 2 additional labels for cucumber
+        label_for_cucumber.update(common_labels)
+        return label_for_cucumber
+
     elif crop_type == 'tomato':
-        return
+        label_for_tomato = generate_labels("a", 4)  # Assuming 2 additional labels for tomato
+        label_for_tomato.update(common_labels)
+        return label_for_tomato
+
     elif crop_type == 'pepper':
+        label_for_pepper = generate_labels("a", 6)  # Assuming 2 additional labels for pepper
+        label_for_pepper.update(common_labels)
         return label_for_pepper
 
 def get_model_by_crop(crop_type):
     # crop_type에 따라 모델 선택
     if crop_type == 'strawberry':
-        model_type = 'vit_base_patch16_224'
+        return'vit_base_patch16_224'
     elif crop_type == 'cucumber':
-        model_type = 'vit_base_patch16_224'
+        return 'vit_base_patch16_224'
     elif crop_type == 'tomato':
-        model_type = 'vit_base_patch16_224'
+        return 'vit_base_patch16_224'
     elif crop_type == 'pepper':
         return 'vit_base_patch16_224'
     else:
