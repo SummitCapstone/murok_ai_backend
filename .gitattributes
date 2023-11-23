@@ -1,0 +1,1 @@
+vit_classifier_from_timm_mini_pepper.h5 filter=lfs diff=lfs merge=lfs -text
