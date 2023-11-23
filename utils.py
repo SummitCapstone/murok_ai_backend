@@ -79,11 +79,11 @@ def get_model_by_crop(crop_type):
 def get_weight_by_crop(crop_type):
     # crop_type에 따라 학습시킨 가중치 선택
     if crop_type == 'strawberry':
-        return
+        return "vit_classifier_from_timm_mini_strawberry.h5"
     elif crop_type == 'cucumber':
-        return
+        return "vit_classifier_from_timm_mini_cucumber.h5"
     elif crop_type == 'tomato':
-        return
+        return "vit_classifier_from_timm_mini_tomato.h5"
     elif crop_type == 'pepper':
         return "vit_classifier_from_timm_mini_pepper.h5"
     else:
