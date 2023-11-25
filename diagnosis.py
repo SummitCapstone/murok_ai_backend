@@ -45,12 +45,9 @@ def diagnose(image_path, crop_type):
   # 추론
   with torch.no_grad():
     outputs = model(image)
-  print(outputs)
   # 상위 3개의 클래스 및 확률 추출
   _, top_classes = torch.topk(outputs, 3, dim=1)
-  print(top_classes)
   top_classes = top_classes.squeeze().tolist()
-  print(top_classes)
   # 클래스를 병명으로 변환
   disease_map = get_disease_map()
   label_map = get_label_map(crop_type)
