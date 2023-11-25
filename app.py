@@ -3,10 +3,14 @@ from diagnosis import diagnose
 app = Flask(__name__)
 
 
-@app.route('/diagnosis', methods=['POST'])
-def detectIssues():
-    board_image_id = request.form.get('boardImageId')
+@app.route('/diagnosis', methods=['GET', 'POST'])
+def diagnosis():
     image = request.files['image']
-    result = diagnose(image)
+    crop_type = request.form['crop_type']
+    # Handle both GET and POST requests here
+    if request.method == 'GET':
+        return {"crop_type": crop_type}
+    # Assuming you want to handle POST requests as well
 
-    return {'boardImageId': board_image_id, 'issues': result}
+    top_diseases, top_probabilities = diagnose(image, crop_type)
+    return {'top_diseases': top_diseases, 'top_probabilities': top_probabilities}

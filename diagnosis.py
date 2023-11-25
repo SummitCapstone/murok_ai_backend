@@ -65,13 +65,3 @@ def diagnose(image_path, crop_type):
   top_probabilities = [probabilities[class_label] for class_label in top_classes]
 
   return top_diseases, top_probabilities
-
-
-# 예제 사용
-image_path = 'test_images/pepper_BH_탄저병.png'
-crop_type = 'pepper'
-top_diseases, top_probabilities = diagnose(image_path, crop_type)
-
-# 결과 출력
-for i in range(3):
-  print(f"Top {i + 1}: {top_diseases[i]} - Probability: {top_probabilities[i]:.4f}")
