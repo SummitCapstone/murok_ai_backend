@@ -1,3 +1,6 @@
+import boto3
+
+
 disease_map = {
  '0': '정상',
  # ===== 병해 =====
@@ -24,24 +27,28 @@ disease_map = {
  'b8': '다량원소결핍(K)'
 }
 
+
 def generate_labels(prefix, num_labels):
   labels = {0: "0"}
   for i in range(1, 3):
       labels[i] = f"{prefix}{num_labels + i}"
   return labels
 
+
 # Common labels for all vegetables
 common_labels = {3: "b1", 4: "b2", 5: "b3", 6: "b6", 7: "b7", 8: "b8"}
+
 
 def get_disease_map():
     return disease_map
 
+
 def get_common_labels():
     return common_labels
 
+
 def get_label_map(crop_type):
     common_labels = get_common_labels()
-
     # crop_type에 따라 모델이 학습한 label 선택
     if crop_type == 'strawberry':
         label_for_strawberry = generate_labels("a", 0)  # Assuming 2 additional labels for strawberry
@@ -63,28 +70,40 @@ def get_label_map(crop_type):
         label_for_pepper.update(common_labels)
         return label_for_pepper
 
-def get_model_by_crop(crop_type):
-    # crop_type에 따라 모델 선택
+
+def download_weights(crop_type):
+    # download files from s3
+    bucket = 'murok-models'
+
     if crop_type == 'strawberry':
-        return'vit_base_patch16_224'
+        file_name = 'weights/strawberry_vit.h5'
+        key = 'vit_classifier_from_timm_mini_strawberry.h5'
     elif crop_type == 'cucumber':
-        return 'vit_base_patch16_224'
+        file_name = 'weights/cucumber_vit.h5'
+        key = 'vit_classifier_from_timm_mini_cucumber.h5'
     elif crop_type == 'tomato':
-        return 'vit_base_patch16_224'
+        file_name = 'weights/tomato_vit.h5'
+        key = 'vit_classifier_from_timm_mini_tomato.h5'
     elif crop_type == 'pepper':
-        return 'vit_base_patch16_224'
+        file_name = 'weights/pepper_vit.h5'
+        key = 'vit_classifier_from_timm_mini_pepper.h5'
     else:
         raise ValueError("Invalid crop_type")
+
+    client = boto3.client('s3')
+    client.download_file(bucket, key, file_name)
+
 
 def get_weight_by_crop(crop_type):
     # crop_type에 따라 학습시킨 가중치 선택
     if crop_type == 'strawberry':
-        return "vit_classifier_from_timm_mini_strawberry.h5"
+        file_name = 'weights/strawberry_vit.h5'
     elif crop_type == 'cucumber':
-        return "vit_classifier_from_timm_mini_cucumber.h5"
+        file_name = 'weights/cucumber_vit.h5'
     elif crop_type == 'tomato':
-        return "vit_classifier_from_timm_mini_tomato.h5"
+        file_name = 'weights/tomato_vit.h5'
     elif crop_type == 'pepper':
-        return "vit_classifier_from_timm_mini_pepper.h5"
+        file_name = 'weights/pepper_vit.h5'
     else:
         raise ValueError("Invalid crop_type")
+    return file_name
