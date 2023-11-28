@@ -76,14 +76,14 @@ def download_weights(crop_type):
     bucket = 'murok-models'
 
     if crop_type == 'strawberry':
-        file_name = 'weights/strawberry_vit.h5'
-        key = 'vit_classifier_from_timm_mini_strawberry.h5'
+        file_name = 'weights/strawberry_vit2.h5'
+        key = 'strawberry_model.h5'
     elif crop_type == 'cucumber':
-        file_name = 'weights/cucumber_vit.h5'
-        key = 'vit_classifier_from_timm_mini_cucumber.h5'
+        file_name = 'weights/cucumber_vit2.h5'
+        key = 'cucumber_model.h5'
     elif crop_type == 'tomato':
-        file_name = 'weights/tomato_vit.h5'
-        key = 'vit_classifier_from_timm_mini_tomato.h5'
+        file_name = 'weights/tomato_vit2.h5'
+        key = 'tomato_model.h5'
     elif crop_type == 'pepper':
         file_name = 'weights/pepper_vit.h5'
         key = 'vit_classifier_from_timm_mini_pepper.h5'
@@ -97,11 +97,11 @@ def download_weights(crop_type):
 def get_weight_by_crop(crop_type):
     # crop_type에 따라 학습시킨 가중치 선택
     if crop_type == 'strawberry':
-        file_name = 'weights/strawberry_vit.h5'
+        file_name = 'weights/strawberry_vit2.h5'
     elif crop_type == 'cucumber':
-        file_name = 'weights/cucumber_vit.h5'
+        file_name = 'weights/cucumber_vit2.h5'
     elif crop_type == 'tomato':
-        file_name = 'weights/tomato_vit.h5'
+        file_name = 'weights/tomato_vit2.h5'
     elif crop_type == 'pepper':
         file_name = 'weights/pepper_vit.h5'
     else:
