@@ -9,7 +9,6 @@ import logging
 import time
 import os
 
-logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 device = 'cuda' if tf.config.list_physical_devices('GPU') else 'cpu'
@@ -27,13 +26,6 @@ if len(os.listdir('/home/ubuntu/murok_ai_backend/weights/')) < 4:
 else:
     logger.debug("Weight files already downloaded")
 
-
-def create_model(crop_type):
-    h5_file = get_weight_by_crop(crop_type)
-    logger.debug(f"h5_file: {h5_file}")
-    model = tf.keras.models.load_model(h5_file)
-    logger.debug(f"Model loaded")
-    return model
 
 # 모델 가중치 미리 불러오기
 with tf.keras.utils.custom_object_scope({'Patches': Patches, 'PatchEncoder': PatchEncoder, 'AdamW': AdamW}):
@@ -63,6 +55,8 @@ def load_and_preprocess_image(image_path):
     image = Image.open(image_path).convert("RGB")
     image = tf.convert_to_tensor(np.array(image))
     image = tf.image.resize(image, [128, 128])
+    # /255 적용
+    image = image / 255.0
     image = tf.image.convert_image_dtype(image, dtype=tf.float32)
 
     # 배치 차원 추가
