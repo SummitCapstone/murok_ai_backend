@@ -85,8 +85,8 @@ def download_weights(crop_type):
         file_name = 'weights/tomato_vit2.h5'
         key = 'tomato_model.h5'
     elif crop_type == 'pepper':
-        file_name = 'weights/pepper_vit.h5'
-        key = 'vit_classifier_from_timm_mini_pepper.h5'
+        file_name = 'weights/pepper_vit2.h5'
+        key = 'pepper_model.h5'
     else:
         raise ValueError("Invalid crop_type")
 
@@ -103,7 +103,7 @@ def get_weight_by_crop(crop_type):
     elif crop_type == 'tomato':
         file_name = 'weights/tomato_vit2.h5'
     elif crop_type == 'pepper':
-        file_name = 'weights/pepper_vit.h5'
+        file_name = 'weights/pepper_vit2.h5'
     else:
         raise ValueError("Invalid crop_type")
     return file_name
