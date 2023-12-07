@@ -73,11 +73,8 @@ def diagnose(image_path, crop_type):
     # 모델 호출
     model = get_model_by_crop(crop_type) 
     logger.debug(f"Get {crop_type} model")
-# 추론 
-    with tf.GradientTape(persistent=True) as tape:
-        tape.watch(image)
-        outputs = model(image)
-        outputs = tf.stop_gradient(outputs)
+    # 추론 
+    outputs = model(image, training=False)
     logger.debug(f"Completed Inference")
     # 상위 3개의 클래스 및 확률 추출
     top_classes = tf.math.top_k(outputs, k=3).indices.numpy()[0].tolist()
